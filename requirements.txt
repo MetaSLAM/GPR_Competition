@@ -1,1 +1,2 @@
 kapture>=1.1
+open3d

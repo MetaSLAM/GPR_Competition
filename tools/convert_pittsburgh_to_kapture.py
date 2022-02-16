@@ -133,7 +133,7 @@ def process_one_trajectory(
         # add trajectory pose info
         rot_quat = Rotation.from_matrix(rot).as_quat()  # qx, qy, qz, qw
         pose_record = (
-            f'{frame_id}, lidar0, {rot_quat[3]}, {rot_quat[0]}, {rot_quat[1]}, '
+            f'{frame_id}, rig, {rot_quat[3]}, {rot_quat[0]}, {rot_quat[1]}, '
             f'{rot_quat[2]}, {pose_6d[0]}, {pose_6d[1]}, {pose_6d[2]}\n'
         )
         f_traj.write(pose_record)
