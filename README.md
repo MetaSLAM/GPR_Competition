@@ -1,4 +1,4 @@
-# MetaSLAM_datasets
+# GPR_Competition_datasets
 Dataset for MetaSLAM Challenge. The website: [https://sites.google.com/andrew.cmu.edu/metaslam](https://sites.google.com/andrew.cmu.edu/metaslam)
 
 # Datasets
