@@ -1,4 +1,4 @@
-# GPR_Competition_datasets
+# GPR Competition datasets
 Dataset for MetaSLAM Challenge. The website: [http://gprcompetition.com/](http://gprcompetition.com/)
 
 # Datasets
