@@ -1,5 +1,5 @@
 # GPR_Competition_datasets
-Dataset for MetaSLAM Challenge. The website: [https://gprcompetition.com](https://gprcompetition.com)
+Dataset for MetaSLAM Challenge. The website: [http://gprcompetition.com/](http://gprcompetition.com/)
 
 # Datasets
 We provide four (more in the future) datasets for evaluating place recognition or global localization methods. They are
