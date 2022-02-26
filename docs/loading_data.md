@@ -36,7 +36,7 @@ class DataLoader:
         """
 ```
 
-## module `metaslam`, public function
+## module `gpr`, public function
 ```python
 def load_dataset(dataset_path: Union[str, Path]) -> List[DataLoader]:
     """Load the dataset with all its trajectories.
@@ -48,11 +48,11 @@ def load_dataset(dataset_path: Union[str, Path]) -> List[DataLoader]:
 # Examples
 ## Get point clouds and convert to numpy.ndarray
 ```python
-import metaslam
+import gpr
 import numpy as np
 
 dataset_path = 'PATH_TO_THE_DATASET'
-dataset = metaslam.load_dataset(dataset_path) # List[traj1, traj2, ...]
+dataset = gpr.load_dataset(dataset_path) # List[traj1, traj2, ...]
 
 traj0 = dataset[0]    # select the first trajectory, DataLoader object
 frame_id = 88         # get the data of 88th frame
@@ -62,10 +62,10 @@ pcd_np = np.asarray(pcd.points)       # np.ndarray
 
 ## Iterate a certain trajectory
 ```python
-import metaslam
+import gpr
 
 dataset_path = 'PATH_TO_THE_DATASET'
-dataset = metaslam.load_dataset(dataset_path) # List[traj1, traj2, ...]
+dataset = gpr.load_dataset(dataset_path) # List[traj1, traj2, ...]
 traj0 = dataset[0]  # select the first trajectory, DataLoader object
 
 for frame_id in range(len(traj0)):

@@ -1,5 +1,5 @@
 # GPR Competition datasets
-Dataset for MetaSLAM Challenge. The website: [http://gprcompetition.com/](http://gprcompetition.com/)
+Dataset for the General Place Recognition Competition. The website: [http://gprcompetition.com/](http://gprcompetition.com/)
 
 # Datasets
 We provide four (more in the future) datasets for evaluating place recognition or global localization methods. They are
@@ -21,15 +21,15 @@ The easiest way to install our tools is by using pip. We recommend the use of vi
 
 First, clone this repository:
 ```bash
-~$ git clone https://github.com/MetaSLAM/MetaSLAM_datasets.git
+~$ git clone https://github.com/MetaSLAM/GPR_Competition.git
 ```
 
 Then, set up the enviroment. Here we create a new virtual environment via conda. You can skip the first two steps if you already have one (but still need to install requirements):
 ```bash
 ~$ conda create --name MetaSLAM python=3.6
 ~$ source activate MetaSLAM
-(MetaSLAM) ~$ cd MetaSLAM_datasets
-(MetaSLAM) ~/MetaSLAM_datasets$ pip install -r requirements.txt
+(MetaSLAM) ~$ cd GPR_Competition
+(MetaSLAM) ~/GPR_Competition$ pip install -r requirements.txt
 ```
 
 To make this tool available for Python to import, usually we have *two* ways. You need to choose **one**:
@@ -38,38 +38,38 @@ To make this tool available for Python to import, usually we have *two* ways. Yo
     ~$ vim .bashrc
 
     # Add the following lines to the end of file, then save and quit.
-    export PYTHONPATH=~/MetaSLAM_datasets:$PYTHONPATH
+    export PYTHONPATH=~/GPR_Competition:$PYTHONPATH
     ```
 - Or add this repo in your code:
     ```python
     import sys
-    sys.path.insert(0, '~/MetaSLAM_datasets')
+    sys.path.insert(0, '~/GPR_Competition')
     ```
 
-Finally, you have successfully installed our tools. You can have a test with `import metaslam` in the python interpreter.
+Finally, you have successfully installed our tools. You can have a test with `import gpr` in the python interpreter.
 
 
 # Tutorial
 We provide detailed documents about the usage of this package, which can be found in the `docs` folder.
 
 ## Modules
-Our package organizes different functions in sub-modules. You may have a better understanding of the `metaslam` package with this table:
+Our package organizes different functions in sub-modules. You may have a better understanding of the `gpr` package with this table:
 
 module | description   
 :--:   |--
-`metaslam`|some common operations
-`metaslam.dataloader`|load dataset from disk, get images, point clouds, poses, etc.
-`metaslam.evaluation`|evaluate your method, such as recall@N, accuracy, PR curve
-`metaslam.utils`|utility, such as rotation, translation, transformation
+`gpr`|some common operations
+`gpr.dataloader`|load dataset from disk, get images, point clouds, poses, etc.
+`gpr.evaluation`|evaluate your method, such as recall@N, accuracy, PR curve
+`gpr.utils`|utility, such as rotation, translation, transformation
 
 ## Quick Start
 ### Load data
 Assume you have download the `Pittsburgh Large Scale dataset`, then you can load it and get the point cloud data:
 ```python
-import metaslam
+import gpr
 
 dataset_path = 'PATH_TO_THE_DATASET'
-dataset = metaslam.load_dataset(dataset_path) # List[traj1, traj2, ...]
+dataset = gpr.load_dataset(dataset_path) # List[traj1, traj2, ...]
 
 traj0 = dataset[0] # select the first trajectory
 frame_id = 88      # get the data of 88th frame
