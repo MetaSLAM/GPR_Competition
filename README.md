@@ -1,16 +1,17 @@
 # GPR Competition datasets
-Dataset for the General Place Recognition Competition. The website: [http://gprcompetition.com/](http://gprcompetition.com/)
+Dataset for the General Place Recognition Competition. You can find more details in the competition website: [http://gprcompetition.com/](http://gprcompetition.com/)
 
 # Datasets
-We provide four (more in the future) datasets for evaluating place recognition or global localization methods. They are
-- **CMU Day/Night UGV**: 
-- **CMU Helicopter Terrain**:
-- **CMU UAV Localization**:
-- **Pittsburgh Large Scale**: It has LiDAR point clouds and ground truth poses for 55 trajectories. Each trajectory is divided into several submaps, and a submap has size 50m*50m with the distance between every two submaps being 2m. [Download](https://xxxx).
+We provide two datasets for evaluating place recognition or global localization methods. They are
+- **Pittsburgh City-scale Dataset**: This dataset aims for the Large-scale 3D Localization (LiDAR→LiDAR) competition track. It has LiDAR point clouds and ground truth poses for 55 trajectories, collected in Pittsburgh. Each trajectory is divided into several submaps, and a submap has size 50m*50m with the distance between every two submaps being 2m. [Download](https://xxxx).
+    
+    ![pitts_large-scale](docs/data_pics/Pittsburgh_City-scale_Dataset.png)
 
-(Maybe we can put a summary table here~)
+- **Pitts Helicopter Dataset**: This dataset aims for the Visual Terrain Relative Navigation (Visual→Visual) competition track. It was collected in a helicopter during a 150km long flight from Ohio to Pittsburgh. It has high resolution images with synchronized IMU and GPS data. Paired reference satellite images for each helicopter frame are also provided. [Download](https://xxxx).
 
-Datasets are provided in the [kapture format](https://github.com/naver/kapture). You can easily manage the data with our tools. For more information about dataset, please refer to [dataset description](./docs/dataset_description.md).
+    ![pitts_large-scale](docs/data_pics/Pitts_Helicopter_Dataset.png)
+
+Datasets are pre-processed and you can easily manage the data with our tools. For more information about dataset, please refer to [dataset description](./docs/dataset_description.md).
 
 
 # Software
