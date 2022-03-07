@@ -25,7 +25,8 @@ class UgvLoader(BaseLoader):
 
     def __getitem__(self, idx: int):
         '''Return the query data (Image, LiDAR, etc)'''
-        return self.get_point_cloud(idx)
+        pcd, sph, top = self.get_point_cloud(idx)
+        return {'pcd': pcd, 'sph': sph, 'top': top}
 
     def get_point_cloud(self, frame_id: int):
         '''Get the point cloud at the `frame_id` frame.
@@ -35,13 +36,13 @@ class UgvLoader(BaseLoader):
         pcd_data = o3d.io.read_point_cloud(self.queries[frame_id])
         ds_pcd = pcd_data.voxel_down_sample(self.resolution)
 
-        #* get raw point cloud
+        # * get raw point cloud
         pcd = np.asarray(ds_pcd.points)
 
-        #* get spherical projection
+        # * get spherical projection
         sph = self.lidar_trans.sph_projection(pcd)
-    
-        #* get top_down projection
+
+        # * get top_down projection
         top = self.lidar_trans.top_projection(pcd)
 
         return pcd, sph, top

@@ -21,7 +21,8 @@ class UavLoader(BaseLoader):
 
     def __getitem__(self, idx: int):
         '''Return the query data (Image, LiDAR, etc)'''
-        return self.get_image(idx)
+        img = self.get_image(idx)
+        return {'img': img}
 
     def get_image(self, frame_id: int):
         '''Get the image at the `frame_id` frame.
