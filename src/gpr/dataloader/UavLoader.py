@@ -6,8 +6,6 @@ Author: maxtom
 
 Copyright (c) 2022 Your Company
 '''
-import open3d as o3d
-from PIL import Image
 from .BaseLoader import BaseLoader
 from ..tools import image_trans
 
