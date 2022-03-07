@@ -46,22 +46,17 @@ class lidar_trans(object):
     def __init__(self, top_size=[64, 64], sph_size=[64, 64], z_range=[-3.0, 3.0], max_dis=30, fov_range=[-25.0, 3.0]):
         """ top_size [int, int]: define top-down view image resolution
             sph_size [int, int]: define spherical view image resolution
-            z_range [float, float]: define point cloud crop values on Z
+            z_range [min:float, max:float]: define point cloud crop values on Z
             max_dis (float): maxisimum distance of cropping on XY-plane
-            fov_range [float, float]: define vertical field of view
-
+            fov_range [min:float, max:float]: define vertical field of view
         """
         #! For top down view
-        self.proj_H, self.proj_W = (int)(top_size/2)
+        self.proj_H, self.proj_W = (int)(top_size[0]/2), (int)(top_size[1]/2)
         self.proj_Z_min, self.proj_Z_max = z_range
-        # self.proj_W = (int)(top_size[1]/2)
-        # self.proj_Z_max = z_range[1]
 
         #! For spherical view
         self.sph_H, self.sph_W = sph_size
         self.sph_down, self.sph_up = fov_range
-        # self.sph_W = sph_size[1]
-        # self.sph_up = fov_range[1]
 
         #! For activate range
         self.max_dis = max_dis

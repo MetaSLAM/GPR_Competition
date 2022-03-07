@@ -8,12 +8,12 @@ Copyright (c) 2022 Your Company
 '''
 
 import sys
-import gpr
+from gpr import lifeloader
 import numpy as np
 
 #* Test Data Loader
-gpr.load_dataset
-
+loader = lifeloader('/home/maxtom/codespace/GPR_Competition/datasets/lifelong/day_back_1')
+loader.__getitem__(10)
 
 #* Test Raw Data Visualization
 
