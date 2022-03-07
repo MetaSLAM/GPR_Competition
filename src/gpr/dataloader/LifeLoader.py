@@ -65,7 +65,7 @@ class LifeLoader(BaseLoader):
         [_, idx, _] = self.tree.search_radius_vector_3d(translation, self.max_radius)
         
         # * get raw point cloud
-        pcd_data = np.asarray(self.map_pcd.points)[idx, :] - translation
+        pcd_data = np.asarray(self.map_pcd.points)[idx, :] - translation -1.5
         pcd = o3d.geometry.PointCloud()
         pcd.points = o3d.utility.Vector3dVector(pcd_data)
         rot = R.from_matrix(rotation)
