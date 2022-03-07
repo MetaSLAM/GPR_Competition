@@ -20,12 +20,6 @@ class BaseLoader(object):
         '''
         self.dataset_dir = dir_path
 
-        #* for raw RGB image
-        self.image_trans = image_trans(image_size=[64,64], channel=3)
-
-        #* for raw RGB image
-        self.lidar_trans = image_trans(image_size=[64,64], channel=3)
-
         #* obtain queries
         self.queries = self.get_query(self.dataset_dir)
 

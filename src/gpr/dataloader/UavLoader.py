@@ -9,20 +9,25 @@ Copyright (c) 2022 Your Company
 import open3d as o3d
 from PIL import Image
 from .BaseLoader import BaseLoader
-from ..tools.geometry import image_trans
-
+from ..tools import image_trans
 
 class UavLoader(BaseLoader):
-    def __init__(self, dir_path):
+    def __init__(self, dir_path, image_size=[512, 512], random_rotation=False):
+        ''' image_size [int, int]: set image resolution
+            random_rotation: True/False, set viewpoint rotation 
+        '''
         super().__init__(dir_path)
+
+        #* for raw RGB image
+        self.image_trans = image_trans(image_size=image_size, channel=3)
 
     def __getitem__(self, idx: int):
         '''Return the query data (Image, LiDAR, etc)'''
-        return self.get_point_clud(idx)
+        return self.get_image(idx)
 
-    def get_point_cloud(self, frame_id: int):
-        '''Get the point cloud at the `frame_id` frame.
-        Raise ValueError if there is no point cloud in the dataset.
-        return -> o3d.geometry.PointCloud
+    def get_image(self, frame_id: int):
+        '''Get the image at the `frame_id` frame.
+        Raise ValueError if there is no image in the dataset.
+        return -> Image.Image
         '''
-        pass
+        return self.image_trans(self.queries[frame_id])
