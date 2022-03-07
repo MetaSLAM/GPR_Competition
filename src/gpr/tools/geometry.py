@@ -12,6 +12,17 @@ import numpy as np
 import torchvision.transforms as transforms
 
 
+def to_image(data):
+    ''' transform tensor backto Image
+    '''
+    if len(data.shape) == 2:
+        im_data=(data*255).astype(np.uint8)
+    else:
+        data = data.cpu().numpy()
+        im_data=((data+1.0)/2.0*255).astype(np.uint8)
+        im_data = np.transpose(im_data, (1, 2, 0))
+    return Image.fromarray(im_data)
+
 class image_trans(object):
     def __init__(self, image_size, channel=3):
         ''' image_size [int, int], channel = 1 or 3

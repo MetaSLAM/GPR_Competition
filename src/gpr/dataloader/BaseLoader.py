@@ -7,11 +7,8 @@ Author: maxtom
 Copyright (c) 2022 Your Company
 '''
 
-import os
-import random
 import numpy as np
 from abc import abstractmethod
-from ..tools.geometry import image_trans
 from scipy.spatial.transform import Rotation as R
 
 
@@ -33,9 +30,10 @@ class BaseLoader(object):
         '''Return the query data (Image, LiDAR, etc)'''
         pass
 
-    def get_pose(self, frame_id: int):
+    def get_pose(self, frame_id: int, rot_type='matrix'):
         '''Get the pose (transformation matrix) at the `frame_id` frame.
         numpy.ndarray([[R, t], [0, 1]]), of size (4, 4)
+        rot_type: 'matrix'->3*3 rotation matrix, 'rpy'-> roll, pitch, yaw angles, 'quat'-> quaternion
         return -> np.ndarray
         '''
         trans_matrix = np.loadtxt('{}.odom'.format(

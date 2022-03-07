@@ -11,10 +11,11 @@ import numpy as np
 from glob import glob
 from .BaseLoader import BaseLoader
 from ..tools import lidar_trans, image_trans
+from scipy.spatial.transform import Rotation as R
 
 
 class LifeLoader(BaseLoader):
-    def __init__(self, dir_path, image_size=[512, 512], top_size=[512, 512], sph_size=[512, 512], resolution=0.5, max_radius=50):
+    def __init__(self, dir_path, image_size=[512, 512], top_size=[512, 512], sph_size=[512, 512], fov_range = [-90, 90], resolution=0.5, max_radius=50):
         ''' image_size [int, int]: set image resolution
             top_size [int, int]: set top down view resolution
             sph_size [int, int]: set spherical view resolution
@@ -29,7 +30,7 @@ class LifeLoader(BaseLoader):
         self.image_trans = image_trans(image_size=image_size, channel=3)
 
         # * for lidar projections
-        self.lidar_trans = lidar_trans(top_size, sph_size, max_dis=self.max_radius)
+        self.lidar_trans = lidar_trans(top_size, sph_size, max_dis=self.max_radius, fov_range=fov_range)
 
         # * Obtain raw point cloud map
         map_pcd = o3d.io.read_point_cloud(self.dir_path+"/dense.pcd")
@@ -59,12 +60,19 @@ class LifeLoader(BaseLoader):
         return -> o3d.geometry.PointCloud
         '''
 
-        _, translation, _ = self.get_pose(frame_id)
+        _, translation, rotation = self.get_pose(frame_id, rot_type='matrix')
 
         [_, idx, _] = self.tree.search_radius_vector_3d(translation, self.max_radius)
-
+        
         # * get raw point cloud
-        pcd = np.asarray(self.map_pcd.points)[idx, :] - translation
+        pcd_data = np.asarray(self.map_pcd.points)[idx, :] - translation
+        pcd = o3d.geometry.PointCloud()
+        pcd.points = o3d.utility.Vector3dVector(pcd_data)
+        rot = R.from_matrix(rotation)
+        trans_matrix = np.eye(4)
+        trans_matrix[0:3, 0:3] = rot.inv().as_matrix()
+        pcd.transform(trans_matrix)
+        pcd = np.array(pcd.points)
 
         # * get spherical projection
         sph = self.lidar_trans.sph_projection(pcd)
