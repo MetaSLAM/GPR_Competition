@@ -7,13 +7,13 @@ Author: maxtom
 Copyright (c) 2022 Your Company
 '''
 
+import sys
 import gpr
 import numpy as np
 
-
-
-
 #* Test Data Loader
+gpr.load_dataset
+
 
 #* Test Raw Data Visualization
 
