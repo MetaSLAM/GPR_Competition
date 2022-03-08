@@ -78,4 +78,4 @@ feature_test = np.array(feature_test)
 topN_recall, one_percent_recall = get_recall(feature_ref, feature_test)
 ```
 
-For more about the data loader, please refer to [loading_data.md](./docs/loading_data.md).
+For more about the data loader, visualization and evaluation, please refer to [loading_data.md](./docs/loading_data.md) and [test_cmu.ipynb](./tests/test_cmu.ipynb).
