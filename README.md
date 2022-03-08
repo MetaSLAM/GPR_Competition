@@ -31,7 +31,7 @@ The easiest way to install our tools is by using pip. We recommend the use of vi
 ```bash
 ~$ git clone https://github.com/MetaSLAM/GPR_Competition.git
 ~$ conda create --name GPR python=3.7
-~$ source activate GPR
+~$ conda activate GPR
 (GPR) ~$ cd GPR_Competition
 (GPR) ~/GPR_Competition$ pip install -r requirements.txt
 (GPR) ~/GPR_Competition$ python setup.py install
