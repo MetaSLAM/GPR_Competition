@@ -24,55 +24,18 @@ Relative ground truth for each sequence compared with the corresponding selected
 
 Datasets are pre-processed and you can easily manage the data with our tools. For more information about dataset, please refer to [dataset description](./docs/dataset_description.md).
 
-## Software
-
-Tools, such as data loader and evaluation metrics, are also provided in Python. The minimum Python version is 3.6. For package dependencies, see [requirements.txt](./requirements.txt).
-
 ## Install
 
 The easiest way to install our tools is by using pip. We recommend the use of virtual environment such as `conda` to keep a clean software environment.
 
-First, clone this repository:
-
 ```bash
 ~$ git clone https://github.com/MetaSLAM/GPR_Competition.git
+~$ conda create --name GPR python=3.7
+~$ source activate GPR
+(GPR) ~$ cd GPR_Competition
+(GPR) ~/GPR_Competition$ pip install -r requirements.txt
+(GPR) ~/GPR_Competition$ python setup.py install
 ```
-
-Then, set up the enviroment. Here we create a new virtual environment via conda. You can skip the first two steps if you already have one (but still need to install requirements):
-
-```bash
-~$ conda create --name MetaSLAM python=3.6
-~$ source activate MetaSLAM
-(MetaSLAM) ~$ cd GPR_Competition
-(MetaSLAM) ~/GPR_Competition$ pip install -r requirements.txt
-```
-
-To make this tool available for Python to import, usually we have *two* ways. You need to choose **one**:
-
-- Add this repo to the variable $PYTHONPATH in the file .bashrc (recommended):
-
-    ```bash
-    ~$ cd GPR_Competition
-
-    pip install .
-
-    # Add the following lines to the end of file, then save and quit.
-    #export PYTHONPATH=$PWD/GPR_Competition:$PYTHONPATH
-    ```
-
-- Install Evaluation:
-
-    ```python
-    import gpr
-    #sys.path.insert(0, '~/GPR_Competition')
-    print(gpr.__path__)
-    ```
-
-Finally, you have successfully installed our tools. You can have a test with `import gpr` in the python interpreter.
-
-## Tutorial
-
-We provide detailed documents about the usage of this package, which can be found in the `docs` folder.
 
 ## Modules
 
@@ -80,26 +43,39 @@ Our package organizes different functions in sub-modules. You may have a better 
 
 module | description
 :--:   |--
-`gpr`|some common operations
+`gpr`|common definations
 `gpr.dataloader`|load dataset from disk, get images, point clouds, poses, etc.
 `gpr.evaluation`|evaluate your method, such as recall@N, accuracy, PR curve
-`gpr.utils`|utility, such as rotation, translation, transformation
+`gpr.tools`|utility, such as rotation, translation, transformation
 
 ## Quick Start
 
-### Load data
-
-Assume you have download the `Pittsburgh Large Scale dataset`, then you can load it and get the point cloud data:
+To quickly use this package for your place recognition task, we provide the test template within the folder `tests`. For **CMU-CrossDomain** datasets, we can quickly evaluate by,
 
 ```python
-import gpr
+from gpr.dataloader import lifeloader
+from gpr.evaluation import get_recall
+from gpr.tools import Feature, to_image
 
-dataset_path = 'PATH_TO_THE_DATASET'
-dataset = gpr.load_dataset(dataset_path) # List[traj1, traj2, ...]
+#* Test Data Loader
+loader1 = lifeloader('/PATH_TO_DATA_TRAJ1')
+loader2 = lifeloader('/PATH_TO_DATA_TRAJ2')
+F = Feature() # Default Opencv HoG Feature
 
-traj0 = dataset[0] # select the first trajectory
-frame_id = 88      # get the data of 88th frame
-pcd = traj0.get_point_cloud(frame_id) # open3d.geometry.PointCloud
+feature_ref = []
+feature_test = []
+for idx in range(100):
+    data1 = loader1.__getitem__(10) #{'img': img, 'pcd': pcd, 'sph': sph, 'top': top}
+    data2 = loader2.__getitem__(10) #{'img': img, 'pcd': pcd, 'sph': sph, 'top': top}
+
+    #* Feature Extraction and Evaluation
+    feature_ref.append(F.infer_data(to_image(data1['img'])))
+    feature_test.append(F.infer_data(to_image(data2['img'])))
+
+feature_ref = np.array(feature_ref)
+feature_test = np.array(feature_test)
+
+topN_recall, one_percent_recall = get_recall(feature_ref, feature_test)
 ```
 
 For more about the data loader, please refer to [loading_data.md](./docs/loading_data.md).
