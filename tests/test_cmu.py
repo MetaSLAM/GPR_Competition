@@ -15,8 +15,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 #* Test Data Loader
-loader1 = lifeloader('/home/maxtom/codespace/GPR_Competition/datasets/lifelong/day_forward_1')
-loader2 = lifeloader('/home/maxtom/codespace/GPR_Competition/datasets/lifelong/day_forward_2')
+loader1 = lifeloader('/home/maxtom/codespace/GPR_Competition/datasets/lifelong/day_forward_1') # Change to your datafolder
+loader2 = lifeloader('/home/maxtom/codespace/GPR_Competition/datasets/lifelong/day_forward_2') # Change to your datafolder
 F = Feature()
 
 feature_ref = []
