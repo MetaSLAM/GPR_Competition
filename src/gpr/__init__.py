@@ -1,2 +1,2 @@
-from .dataloader import lifeloader, ugvloader, uavloader
+from .dataloader import LifeLoader
 from .evaluation import get_recall

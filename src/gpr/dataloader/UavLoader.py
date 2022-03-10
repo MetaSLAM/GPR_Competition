@@ -9,14 +9,17 @@ Copyright (c) 2022 Your Company
 from .BaseLoader import BaseLoader
 from ..tools import image_trans
 
+# NOTE: This dataset loader is not complete now !!
+
+
 class UavLoader(BaseLoader):
     def __init__(self, dir_path, image_size=[512, 512], random_rotation=False):
-        ''' image_size [int, int]: set image resolution
-            random_rotation: True/False, set viewpoint rotation 
+        '''image_size [int, int]: set image resolution
+        random_rotation: True/False, set viewpoint rotation
         '''
         super().__init__(dir_path)
 
-        #* for raw RGB image
+        # * for raw RGB image
         self.image_trans = image_trans(image_size=image_size, channel=3)
 
     def __getitem__(self, idx: int):

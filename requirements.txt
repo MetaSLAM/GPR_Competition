@@ -1,2 +1,6 @@
-kapture>=1.1
+numpy
+scipy
 open3d
+opencv-python
+tqdm
+matplotlib

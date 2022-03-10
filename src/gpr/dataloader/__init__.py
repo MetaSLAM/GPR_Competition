@@ -1,4 +1,5 @@
-from .BaseLoader import BaseLoader as baseloader
-from .UgvLoader import UgvLoader as ugvloader
-from .UavLoader import UavLoader as uavloader
-from .LifeLoader import LifeLoader as lifeloader
+# these two loader is not complete now
+# from .UgvLoader import UgvLoader
+# from .UavLoader import UavLoader
+
+from .LifeLoader import LifeLoader

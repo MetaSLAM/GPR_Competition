@@ -6,17 +6,28 @@ Author: maxtom
 
 Copyright (c) 2022 Your Company
 '''
+from typing import Tuple
 import open3d as o3d
 import numpy as np
 from .BaseLoader import BaseLoader
 from ..tools import lidar_trans
 
+# NOTE: This dataset loader is not complete now !!
+
 
 class UgvLoader(BaseLoader):
-    def __init__(self, dir_path, top_size=[512, 512], sph_size=[512, 512], resolution=0.5):
-        ''' image_size [int, int]: set image resolution
+    def __init__(
+        self,
+        dir_path: str,
+        top_size: Tuple[int, int] = (512, 512),
+        sph_size: Tuple[int, int] = (512, 512),
+        resolution: float = 0.5,
+    ):
+        """Data loader for the UGV Dataset.
+        Args:
+            image_size [int, int]: set image resolution
             resolution [float]: resolution for point cloud voxels
-        '''
+        """
         super().__init__(dir_path)
         self.resolution = resolution
 
