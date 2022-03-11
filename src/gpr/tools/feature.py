@@ -9,17 +9,21 @@ Copyright (c) 2022 Your Company
 import numpy as np
 import cv2
 
-class Feature(object):
-    def __init__(self):
-        print("Define your descriptor here")
+
+class HogFeature:
+    def __init__(
+        self,
+        winSize=(512, 512),
+        blockSize=(16, 16),
+        blockStride=(8, 8),
+        cellSize=(16, 16),
+        nbins=9,
+    ):
+        self.winSize = winSize
+        self.hog = cv2.HOGDescriptor(
+            self.winSize, blockSize, blockStride, cellSize, nbins
+        )
 
     def infer_data(self, query):
-        winSize = (512,512)
-        blockSize = (16,16)
-        blockStride = (8,8)
-        cellSize = (16,16)
-        nbins = 9
-        hog = cv2.HOGDescriptor(winSize,blockSize,blockStride,cellSize,nbins)
-        query_desc=hog.compute(cv2.resize(np.array(query), winSize))
-        
+        query_desc = self.hog.compute(cv2.resize(np.array(query), self.winSize))
         return query_desc.reshape(-1)

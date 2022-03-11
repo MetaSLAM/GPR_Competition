@@ -3,3 +3,4 @@
 # from .UavLoader import UavLoader
 
 from .LifeLoader import LifeLoader
+from .PittsLoader import PittsLoader

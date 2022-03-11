@@ -7,9 +7,10 @@ Author: maxtom
 Copyright (c) 2022 Your Company
 '''
 
-from gpr import LifeLoader
-from gpr.tools import Feature, to_image
+from gpr.dataloader import LifeLoader
 from gpr.evaluation import get_recall
+from gpr.tools import HogFeature, to_image
+
 from tqdm import tqdm
 import numpy as np
 from matplotlib import pyplot as plt
@@ -21,7 +22,7 @@ loader1 = LifeLoader(
 loader2 = LifeLoader(
     '/home/maxtom/codespace/GPR_Competition/datasets/lifelong/day_forward_2'
 )  # Change to your datafolder
-F = Feature()
+F = HogFeature()
 
 feature_ref = []
 feature_test = []

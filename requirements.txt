@@ -1,5 +1,6 @@
 numpy
 scipy
+scikit-learn
 open3d
 opencv-python
 tqdm

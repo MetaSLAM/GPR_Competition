@@ -1,2 +1,2 @@
 from .geometry import lidar_trans, to_image
-from .feature import Feature
+from .feature import HogFeature
