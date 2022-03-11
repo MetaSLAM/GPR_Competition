@@ -29,23 +29,33 @@ hog_fea = HogFeature()
 
 # feature extraction
 feature_ref = []
+feature_test = []
 for idx in tqdm(range(len(pitts_loader)), desc='comp. fea.'):
-    pcd = pitts_loader[idx]['pcd']
-    sph_img = lidar_to_sph.sph_projection(pcd)  # get spherical projection
-    sph_img = (sph_img * 255).astype(np.uint8)
+    pcd_ref = pitts_loader[idx]['pcd']
+    pcd_test = pcd_ref @ np.array(
+        [[0.866, 0.5, 0], [-0.5, 0.866, 0], [0, 0, 1]]
+    )  # rotate pi/6 around z-axis
 
+    sph_img = lidar_to_sph.sph_projection(pcd_ref)  # get spherical projection
+    sph_img = (sph_img * 255).astype(np.uint8)
     feature_ref.append(hog_fea.infer_data(sph_img))  # get HOG feature
+
+    sph_img = lidar_to_sph.sph_projection(pcd_test)  # get spherical projection
+    sph_img = (sph_img * 255).astype(np.uint8)
+    feature_test.append(hog_fea.infer_data(sph_img))  # get HOG feature
 
 # evaluate recall
 feature_ref = np.array(feature_ref)
+feature_test = np.array(feature_test)
 topN_recall, one_percent_recall = get_recall(
-    feature_ref, feature_ref, true_threshold=1, num_neighbors=8
+    feature_ref, feature_test, true_threshold=1, num_neighbors=18
 )
 
 # plot result
 fig, ax = plt.subplots(1, 1, dpi=200)
 plt.rcParams['font.size'] = '12'
 plt.plot(np.arange(1, len(topN_recall) + 1), topN_recall)
+plt.xticks(np.arange(1, len(topN_recall), 2))
 plt.xlabel('Top N')
 plt.ylabel('Recall %')
 plt.title('Place Recognition Analysis')

@@ -34,16 +34,15 @@ def get_recall(
     one_percent_threshold = max(int(round(len(reference_feature) / 100.0)), 1)
 
     num_evaluated = 0
-    dists, indices = database_nbrs.query(queries_feature, k=num_neighbors + 1)
+    dists, indices = database_nbrs.query(queries_feature, k=num_neighbors)
 
     for i in range(true_threshold, len(queries_feature) - true_threshold):
         true_neighbors = i + np.arange(-true_threshold, true_threshold + 1)
-        true_neighbors = np.setdiff1d(true_neighbors, [i])  # exclude itself
         if len(true_neighbors) == 0:
             continue
         num_evaluated += 1
 
-        retrieved_indices = indices[i, 1:]  # exclude itself
+        retrieved_indices = indices[i]
         for j in range(0, len(retrieved_indices)):
             if retrieved_indices[j] in true_neighbors:
                 if j == 0:
