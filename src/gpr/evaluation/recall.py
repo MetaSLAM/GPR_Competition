@@ -22,7 +22,7 @@ def get_recall(
         reference_feature [N1, M]: N1 frames reference feature
         queries_feature [N2, M]: N2 frames query features
         true_threshold [int]: threshold for true place recognition
-        num_neighbors [int]: Knn search
+        num_neighbors [int]: Knn search, determine the N for top-N recall
     Return:
         topN_recall, one_percent_recall
     """

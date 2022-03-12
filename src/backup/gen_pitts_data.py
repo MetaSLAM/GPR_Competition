@@ -45,7 +45,7 @@ def parse_arguments():
     )
     parser.add_argument(
         "--interval",
-        default=2,
+        default=4,
         help="distance in meters between two samples",
         type=int,
     )
@@ -106,8 +106,8 @@ def gen_test_data(
     `submap_end_ids` are used both as reference and test. The number
     of submaps for reference and testing is the same.
         For the testing submaps, we randomly translates points along
-    the x- and y- axis in range [-0.5m, 0.5m), and randomly rotates
-    points around the z-axis in range [-pi/12, pi/12).
+    the x- and y- axis in range [-2.0m, 2.0m), and randomly rotates
+    points around the z-axis in range [-pi/6, pi/6).
     """
     pathlib.Path(save_dir).mkdir(parents=True, exist_ok=True)
     np.random.seed(seed=seed)  # set random seed
@@ -141,9 +141,13 @@ def gen_test_data(
             trans = np.identity(4)
             trans[:3, :3] = R.from_euler(
                 'xyz',
-                (0, 0, (np.random.rand() - 0.5) * np.pi / 6),
+                (0, 0, (np.random.rand() - 0.5) * np.pi / 3),
             ).as_matrix()
-            trans[:3, 3] = [np.random.rand(), np.random.rand(), 0]
+            trans[:3, 3] = [
+                (np.random.rand() - 0.5) * 4,
+                (np.random.rand() - 0.5) * 4,
+                0,
+            ]
 
             # read, down sample, transform and save
             pcd = o3d.io.read_point_cloud(ref_files[random_id])
