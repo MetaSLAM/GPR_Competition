@@ -16,7 +16,7 @@ from gpr.evaluation import get_recall
 from gpr.tools import HogFeature, lidar_trans
 
 # * Test Data Loader, change to your datafolder
-pitts_loader = PittsLoader('datasets/Pitts/gpr_pitts_test')
+pitts_loader = PittsLoader('datasets/Pitts/gpr_pitts_sample')
 
 # * Point cloud conversion and feature extractor
 lidar_to_sph = lidar_trans(

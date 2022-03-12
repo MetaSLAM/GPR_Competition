@@ -18,7 +18,12 @@ class PittsLoader(BaseLoader):
         """Data loader for the Pittsburgh Dataset."""
         super().__init__(dir_path)
 
-        self.len = len(glob(self.dir_path + '/*.pcd'))
+        # may be test/query data, which has no poses
+        try:
+            self.poses = np.load(self.dir_path + '/poses_6d.npy')
+        except FileNotFoundError:
+            self.poses = None
+        self.len = len(glob(dir_path + '/*.pcd'))
 
     def __len__(self) -> int:
         """Return the number of frames in this dataset"""
@@ -46,8 +51,16 @@ class PittsLoader(BaseLoader):
             frame_id: the index of current frame
         Returns:
             pose: numpy.ndarray([[R, t], [0, 1]]), of size (4, 4)
+        Raise:
+            ValueError: If this dataset doesn't have poses
         """
-        pose6d = np.load(self.dir_path + f'/{frame_id:06d}_pose6d.npy')[:6]
+        if self.poses is None:
+            raise ValueError(
+                'This dataset does NOT have poses. '
+                'Maybe it is used for testing/query'
+            )
+
+        pose6d = self.poses[frame_id]  # size (6,)
         rot_matrix = R.from_euler('xyz', pose6d[3:]).as_matrix()
         trans_vector = pose6d[:3].reshape((3, 1))
 
