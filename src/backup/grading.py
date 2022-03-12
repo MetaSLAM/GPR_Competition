@@ -89,7 +89,7 @@ def main(submission_file: str, seed: int) -> float:
     ref_query_feature = np.load(submission_file)
 
     topN_recalls, one_percent_recall = get_mixed_up_recall(
-        ref_query_feature, true_threshold=1, num_neighbors=18, seed=9216034
+        ref_query_feature, true_threshold=1, num_neighbors=18, seed=seed
     )
 
     return topN_recalls[0]
