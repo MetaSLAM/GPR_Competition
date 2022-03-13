@@ -1,5 +1,5 @@
 # Loading Data
-We provide data loader for the datasets. These datasets are based on the kapture format. However, the original kapture class only provides file name to recorded data, which is not so convenient. This loader gives interfaces to directly get the data.
+We provide data loader for the datasets. With these loaders, you can easily get access to the data (point clouds, images, etc.) and the poses of each frame/submap.
 
 Data type of each frame:
 -    LiDAR point clouds: open3d.geometry.PointCloud
@@ -8,67 +8,106 @@ Data type of each frame:
 -    rotation: R $\in$ SO(3), numpy.ndarray, of size (3, 3)
 -    translation: t = numpy.ndarray([x, y, z]), of size (3, 1)
 
-## class `DataLoader`
+We provide **sample data** for quick testing. The sample data for the Pittsburgh City-scale Dataset can be found [here](https://sandbox.zenodo.org/record/1033096).
+
+## class `PittsLoader`
 ```python
-class DataLoader:
-    def __len__(self) -> None:
+class PittsLoader(BaseLoader):
+    def __len__(self) -> int:
         """Return the number of frames in this dataset"""
-    
-    def get_point_cloud(self, frame_id: int) -> o3d.geometry.PointCloud:
+
+    def __str__(self) -> str:
+        return f'PittsLoader at "{self.dir_path}" with {self.len} submaps.'
+
+    def __repr__(self) -> str:
+        return f'PittsLoader at "{self.dir_path}" with {self.len} submaps.'
+
+    def __getitem__(self, frame_id: int):
+        """Return the query data (Image, LiDAR, etc)
+        Args:
+            frame_id: the index of current frame
+        Returns:
+            data: Dict['img':Image, 'pcd':LiDAR, ...]
+        """
+
+    def get_point_cloud(self, frame_id: int) -> np.ndarray:
         """Get the point cloud at the `frame_id` frame.
-        Raise ValueError if there is no point cloud in the dataset.
+        Args:
+            frame_id: the index of current frame
+        Returns:
+            pcd: N*3 point clouds
         """
-    
-    def get_image(self, frame_id: int) -> PIL.Image.Image:
-        """Get the image at the `frame_id` frame.
-        Raise ValueError if there is no image in the dataset.
-        """
-    
-    def get_rotation(self, frame_id: int) -> np.ndarray:
-        """Get the 3*3 rotation matrix at the `frame_id` frame."""
-    
-    def get_translation(self, frame_id: int) -> np.ndarray:
-        """Get the 3*1 translation vector at the `frame_id` frame"""
     
     def get_pose(self, frame_id: int) -> np.ndarray:
-        """Get the pose (transformation matrix) at the `frame_id` frame.
-        numpy.ndarray([[R, t], [0, 1]]), of size (4, 4)
+        """Get the pose (4*4 transformation matrix) at the `frame_id` frame.
+        Args:
+            frame_id: the index of current frame
+        Returns:
+            pose: numpy.ndarray([[R, t], [0, 1]]), of size (4, 4)
+        Raise:
+            ValueError: If this dataset doesn't have poses
         """
-```
 
-## module `gpr`, public function
-```python
-def load_dataset(dataset_path: Union[str, Path]) -> List[DataLoader]:
-    """Load the dataset with all its trajectories.
-    Each trajectory is represented as a `DataLoader` object, and they are
-    sorted with the trajectory folder name in the list.
-    """
+    def get_rotation(self, frame_id: int, type: str = 'matrix') -> np.ndarray:
+        """Get the rotation part at of the pose at the `frame_id` frame.
+        Args:
+            frame_id: the index of current frame
+            type: can be one of {'matrix', 'rpy', 'quat'}. 'matrix'-> 3*3 rotation matrix,
+                'rpy'-> roll, pitch, yaw angles, 'quat'-> quaternion
+        Returns:
+            rotation: if type == 'matrix', then it is 3*3 rotation matrix. If type == 'rpy',
+                then it is (roll, pitch, yaw) of size (3,). If type == 'quat', then it is
+                quaternion (qx, qy, qz, qw) of size (4,).
+        Raises:
+            ValueError: if type is not one of {'matrix', 'rpy', 'quat'}.
+        """
+
+    def get_translation(self, frame_id: int) -> np.ndarray:
+        """Get the 3*1 translation vector of the pose at the `frame_id` frame
+        Args:
+            frame_id: the index of current frame
+        Returns:
+            translation: (3,) np.ndarray, the translation vector.
+        """
 ```
 
 # Examples
-## Get point clouds and convert to numpy.ndarray
+## Get point clouds and its pose
 ```python
-import gpr
-import numpy as np
+from gpr.dataloader import PittsLoader
 
 dataset_path = 'PATH_TO_THE_DATASET'
-dataset = gpr.load_dataset(dataset_path) # List[traj1, traj2, ...]
+pitts_loader = PittsLoader(dataset_path)
 
-traj0 = dataset[0]    # select the first trajectory, DataLoader object
-frame_id = 88         # get the data of 88th frame
-pcd = traj0.get_point_cloud(frame_id) # open3d.geometry.PointCloud
-pcd_np = np.asarray(pcd.points)       # np.ndarray
+submap_id = 50
+pcd_ndarray = pitts_loader[submap_id]['pcd'] 
+# or pcd_ndarray = pitts_loader.get_point_cloud(submap_id)
+pose = pitts_loader.get_pose(submap_id)
 ```
 
-## Iterate a certain trajectory
+## Iterate the dataloader
 ```python
-import gpr
+from gpr.dataloader import PittsLoader
 
 dataset_path = 'PATH_TO_THE_DATASET'
-dataset = gpr.load_dataset(dataset_path) # List[traj1, traj2, ...]
-traj0 = dataset[0]  # select the first trajectory, DataLoader object
+pitts_loader = PittsLoader(dataset_path)
 
-for frame_id in range(len(traj0)):
-    pcd = traj0.get_point_cloud(frame_id)
-    poses = traj0.get_pose(frame_id)
+for frame_id in range(len(pitts_loader)):
+    pcd = pitts_loader.get_point_cloud(frame_id)
+    poses = pitts_loader.get_pose(frame_id)
+```
+
+## Get the trajectory xyz
+```python
+import numpy as np
+from gpr.dataloader import PittsLoader
+
+dataset_path = 'PATH_TO_THE_DATASET'
+pitts_loader = PittsLoader(dataset_path)
+
+trajectory = [
+    pitts_loader.get_translation(frame_id) 
+    for frame_id in range(len(pitts_loader))
+]
+trajectory = np.vstack(trajectory)
 ```

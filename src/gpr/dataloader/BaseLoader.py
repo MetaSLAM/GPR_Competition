@@ -72,12 +72,12 @@ class BaseLoader(object):
             raise ValueError(f'{type} is not a valid type.')
 
     def get_translation(self, frame_id: int) -> np.ndarray:
-        '''Get the 3*1 translation vector of the pose at the `frame_id` frame
+        """Get the 3*1 translation vector of the pose at the `frame_id` frame
         Args:
             frame_id: the index of current frame
         Returns:
             translation: (3,) np.ndarray, the translation vector.
-        '''
+        """
         transform = self.get_pose(frame_id)
         return transform[:3, 3]
 

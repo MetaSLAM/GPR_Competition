@@ -89,4 +89,11 @@ feature_ref = np.array(feature_ref)
 topN_recall, one_percent_recall = get_recall(feature_ref, feature_ref)
 ```
 
+Then, if you want to submit your result, use the following code to save the (num_submap * feature_dim) feature to a *.npy file:
+```python
+from gpr.tools import save_feature_for_submission
+save_feature_for_submission('FILE_NAME.npy', feature_ref)
+```
+and you can submit the `FILE_NAME.npy` to the AIcrowd platform.
+
 For more about the data loader, visualization and evaluation, please refer to [loading_data.md](./docs/loading_data.md) and the jupyter notebook [test_pitts.ipynb](./tests/test_pitts.ipynb).
