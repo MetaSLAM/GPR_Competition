@@ -2,23 +2,26 @@
 This script is a quick test for the Pittsburgh dataset.
 
 Created Date: Friday, March 11th 2022, 3:08:28 pm
-Author: Haowen Lai
+Author: Haowen Lai, Shiqi Zhao
 
 Copyright (c) 2022 Your Company
 """
 
+from ctypes import pointer
 import numpy as np
 from tqdm import tqdm
+from glob import glob
+import open3d as o3d
 from matplotlib import pyplot as plt
 
-from gpr.dataloader import PittsLoader
 from gpr.evaluation import get_recall
 from gpr.tools import HogFeature, lidar_trans
 
-# * Test Data Loader, change to your datafolder
-pitts_loader = PittsLoader('datasets/Pitts/gpr_pitts_sample')
+# * Load validation set, modify the folder path here
+VAL_DATA_PATH = '{}/VAL'.format('/data_hdd_1/GPR/')
 
 # * Point cloud conversion and feature extractor
+# * Load your model here
 lidar_to_sph = lidar_trans(
     top_size=(512, 512),
     sph_size=(512, 512),
@@ -27,33 +30,34 @@ lidar_to_sph = lidar_trans(
 )  # for lidar projections
 hog_fea = HogFeature()
 
-# feature extraction
+# feature extraction and take val_1 as an example
+pcd_files = sorted(glob('{}/DATABASE/val_1/*.pcd'.format(VAL_DATA_PATH)))
 feature_ref = []
 feature_test = []
-for idx in tqdm(range(len(pitts_loader)), desc='comp. fea.'):
-    pcd_ref = pitts_loader[idx]['pcd']
-    pcd_test = pcd_ref @ np.array(
-        [[0.866, 0.5, 0], [-0.5, 0.866, 0], [0, 0, 1]]
-    )  # rotate pi/6 around z-axis
+for pcd_name in tqdm(pcd_files):
+    #* Load pcd files and preprocess them
+    pcd_database = np.asarray(o3d.io.read_point_cloud(pcd_name).points)
+    pcd_query = np.asarray(o3d.io.read_point_cloud('{}/QUERY/val_1/{}'.format(VAL_DATA_PATH, pcd_name.split('/')[-1])).points)
 
     #! In each val set, for same frame index in QUERY and DATABASE are ground turth pair
-    #! load database feature here
+    #! generate database feature here
     #* example code, modify here!
-    sph_img = lidar_to_sph.sph_projection(pcd_ref)  # get spherical projection
+    sph_img = lidar_to_sph.sph_projection(pcd_database)  # get spherical projection
     sph_img = (sph_img * 255).astype(np.uint8)
     feature_ref.append(hog_fea.infer_data(sph_img))  # get HOG feature
 
-    #! load query feature here
+    #! generate query feature here
     #* example code, modify here!
-    sph_img = lidar_to_sph.sph_projection(pcd_test)  # get spherical projection
+    sph_img = lidar_to_sph.sph_projection(pcd_query)  # get spherical projection
     sph_img = (sph_img * 255).astype(np.uint8)
     feature_test.append(hog_fea.infer_data(sph_img))  # get HOG feature
 
 # evaluate recall
+# our evaluation function get_recall() can only 
 feature_ref = np.array(feature_ref)
 feature_test = np.array(feature_test)
 topN_recall, one_percent_recall = get_recall(
-    feature_ref, feature_test, true_threshold=1, num_neighbors=18
+    feature_ref, feature_test, true_threshold=1, num_neighbors=20
 )
 
 # plot result

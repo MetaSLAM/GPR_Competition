@@ -2,11 +2,29 @@
 
 Dataset for the General Place Recognition Competition. You can find more details in the competition website: [http://gprcompetition.com/](http://gprcompetition.com/)
 
+## Note
+- **1st-round Competition: <font color=Red>04/08/2022~05/24/2022</font>**
+
+- **2nd-round Competition: <font color=Red>05/24/2022~09/01/2022</font>**
+
+- **Large-scale 3D Localization Dataset:**
+  * **Training and validation set release: <font color=Red>8th May</font>**
+  * **Testing set release: <font color=Red>9th May</font>**
+
+- **Visual Terrain Relative Navigation Datase:**
+  * **Training and validation set release: <font color=Red>9th May</font>**
+  * **Testing set release: <font color=Red>9th May</font>**
+
+## AIcrowd
+The performance is evaluated on AIcrowd, sign up or log in [here](https://www.aicrowd.com/) and register the competition
+[[ICRA2022] General Place Recognition: City-scale UGV Localization](https://www.aicrowd.com/challenges/icra2022-general-place-recognition-city-scale-ugv-localization)
+[[ICRA2022] General Place Recognition: Visual Terrain Relative Navigation](https://www.aicrowd.com/challenges/icra2022-general-place-recognition-visual-terrain-relative-navigation)
+
 ## Datasets
 
 We provide two datasets for evaluating place recognition or global localization methods. They are
 
-- **Pittsburgh City-scale Dataset**: This dataset aims for the Large-scale 3D Localization (LiDAR→LiDAR) competition track. It has LiDAR point clouds and ground truth poses for 55 trajectories, collected in Pittsburgh. Each trajectory is divided into several submaps, and a submap has size 50m*50m with the distance between every two submaps being 2m. [Download](https://xxxx).
+- **Large-scale 3D Localization Dataset**: This dataset aims for the Large-scale 3D Localization (LiDAR$\rightarrow$LiDAR) competition track. It has LiDAR point clouds and ground truth poses for 55 trajectories, collected in Pittsburgh. Each trajectory is divided into several submaps, and a submap has size 50m*50m with the distance between every two submaps being 2m. [Dropbox](https://xxxx) and [BAIDU CLOUD](https://pan.baidu.com/s/1M97bBnSoRhy-56NhAmpf7w)(Extraction code:qghd).
     
     ![pitts_large-scale](docs/data_pics/Pittsburgh_City-scale_Dataset.png)
 
@@ -16,16 +34,17 @@ We provide two datasets for evaluating place recognition or global localization 
 
     You can find the **sample** training data `gpr_pitts_sample.tar.gz` and testing/query data `gpr_pitts_query_sample.tar.gz` [here](https://sandbox.zenodo.org/record/1033096).
 
-- **CMU Cross-Domain Dataset**: This dataset focuses on visual localization for UGVs using omnidirectional cameras within outdoor campus-type environments. We collected 80 real-world UAV sequences using a rover robot equipped with a 360 camera, a Velodyne VLP-16 LiDAR, a RealSense VIO and an Xsens MTI IMU. These consisted of 10 different trajectories. For each trajectory, we traversed 8 times, including forward(start point to endpoint)/backward(endpoint to start point) directions and day-light (2pm to 4:30pm)/dawn-light (6am to 7am or 5pm to 6pm). 8-times includes two forward sequences and two backward sequences during day-light and two forward and two backward sequences during dawn-light.Each trajectory is at least overlapped at one junction with the others,and some trajectories even have multiple junctions. This feature enables the dataset to be used in tasks such as LiDAR place recognition and multi-map fusion. [Download](https://xxxx).  
+- **Visual Terrain Relative Navigation Dataset**: This dataset focuses on visual place recognition over a large-scale trajectory. The trajectory of interest is a 150km long flight from Ohio to Pittsburgh using a helicopter with a nadir-facing high resolution camera. The trajectory includes several types of environments of varying difficulty, including urban/suburban, forested, rural, and other natural terrain.
+Part of the difficulty of this challenge involves being able to correctly match the inference imagery to the reference map imagery taken several years prior. We captured this flight in August 2017, and we include georeferenced satellite imagery from 2012.
+Ground truth positions of the flight were collected using a NovAtel's SPAN GPS+INS, with submeter level accuracy. [Download](https://xxxx).  
     
-    ![CMU_Lifelong](docs/data_pics/cmu_lifelong.png)
-
+    ![uav_navigation](docs/data_pics/Pitts_Helicopter_Dataset.png)
 
     In this dataset, we include:
-    * High resolution (1024x512) omnidirectional imagery, captured at 15fps. Timestamps are synchronized with the rest of the system.
-    * Timestamped IMU (linear accelerations and angular velocities)
-    * Timestamped VLP-16 LiDAR generated point cloud data
-    * Timestamped RealSense generated odometry data
+    * High resolution (1600x1200) helicopter imagery, captured at 20fps. Timestamps are synchronized with the rest of the system.
+    * Paired reference satellite image for each helicopter frame.
+    * Timestamped IMU (linear and angular velocities).
+    * Timestamped global positions (ECEF coordinates).
 
 Relative ground truth for each sequence compared with the corresponding selected reference sequence is provided.
 
@@ -88,6 +107,8 @@ for idx in tqdm(range(len(pitts_loader)), desc='comp. fea.'):
 feature_ref = np.array(feature_ref)
 topN_recall, one_percent_recall = get_recall(feature_ref, feature_ref)
 ```
+
+Second, if you want to evaluate your model on validation set, please refer to our example code [here](tests/val_pitts.py)
 
 Then, if you want to submit your result, use the following code to save the (num_submap * feature_dim) feature to a *.npy file:
 ```python
