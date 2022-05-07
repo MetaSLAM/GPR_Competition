@@ -36,10 +36,15 @@ for idx in tqdm(range(len(pitts_loader)), desc='comp. fea.'):
         [[0.866, 0.5, 0], [-0.5, 0.866, 0], [0, 0, 1]]
     )  # rotate pi/6 around z-axis
 
+    #! In each val set, for same frame index in QUERY and DATABASE are ground turth pair
+    #! load database feature here
+    #* example code, modify here!
     sph_img = lidar_to_sph.sph_projection(pcd_ref)  # get spherical projection
     sph_img = (sph_img * 255).astype(np.uint8)
     feature_ref.append(hog_fea.infer_data(sph_img))  # get HOG feature
 
+    #! load query feature here
+    #* example code, modify here!
     sph_img = lidar_to_sph.sph_projection(pcd_test)  # get spherical projection
     sph_img = (sph_img * 255).astype(np.uint8)
     feature_test.append(hog_fea.infer_data(sph_img))  # get HOG feature
@@ -59,7 +64,7 @@ plt.xticks(np.arange(1, len(topN_recall), 2))
 plt.xlabel('Top N')
 plt.ylabel('Recall %')
 plt.title('Place Recognition Analysis')
-plt.savefig('PR_analysis.png')
+plt.savefig('Top_N.png')
 
 print("Top 1 recall {:.2%}".format(topN_recall[0]))
 print("Top 5 recall {:.2%}".format(topN_recall[4]))
