@@ -16,9 +16,11 @@ Dataset for the General Place Recognition Competition. You can find more details
   * **Testing set release: <font color=Red>9th May</font>**
 
 ## AIcrowd
-The performance is evaluated on AIcrowd, sign up or log in [here](https://www.aicrowd.com/) and register the competition
-[[ICRA2022] General Place Recognition: City-scale UGV Localization](https://www.aicrowd.com/challenges/icra2022-general-place-recognition-city-scale-ugv-localization)
-[[ICRA2022] General Place Recognition: Visual Terrain Relative Navigation](https://www.aicrowd.com/challenges/icra2022-general-place-recognition-visual-terrain-relative-navigation)
+The performance is evaluated on AIcrowd, please sign up or log in [here](https://www.aicrowd.com/) and register the competition
+
+* [[ICRA2022] General Place Recognition: City-scale UGV Localization](https://www.aicrowd.com/challenges/icra2022-general-place-recognition-city-scale-ugv-localization)
+
+* [[ICRA2022] General Place Recognition: Visual Terrain Relative Navigation](https://www.aicrowd.com/challenges/icra2022-general-place-recognition-visual-terrain-relative-navigation)
 
 ## Datasets
 
