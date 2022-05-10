@@ -4,8 +4,14 @@ Dataset for the General Place Recognition Competition. You can find more details
 
 ## Note
 - **1st-round Competition: <font color=Red>04/08/2022~05/24/2022</font>**
+  * :1st_place_medal:1st and :2nd_place_medal:2nd --> Present @ ICRA 2022
 
 - **2nd-round Competition: <font color=Red>05/24/2022~09/01/2022</font>**
+  * :1st_place_medal:1st --> :dollar: 3000$
+  * :2nd_place_medal:2nd --> :dollar: 2000$
+  * Exceptional Individuals 
+    * Academic Visits to [RI](https://www.ri.cmu.edu/)
+    * Internship at [Air Lab](http://theairlab.org/)
 
 - **Large-scale 3D Localization Dataset:**
   * **Training and validation set release: <font color=Red>8th May</font>**

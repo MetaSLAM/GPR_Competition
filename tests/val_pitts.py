@@ -39,7 +39,8 @@ for pcd_name in tqdm(pcd_files):
     pcd_database = np.asarray(o3d.io.read_point_cloud(pcd_name).points)
     pcd_query = np.asarray(o3d.io.read_point_cloud('{}/QUERY/val_1/{}'.format(VAL_DATA_PATH, pcd_name.split('/')[-1])).points)
 
-    #! In each val set, for same frame index in QUERY and DATABASE are ground turth pair
+    #! In each val set, for same frame index in QUERY and DATABASE are set to be ground turth pairs
+    #! eg: the groud truth match of VAL/QUERY/val_1/000001.pcd is VAL/DATABASE/val_1/000001.pcd
     #! generate database feature here
     #* example code, modify here!
     sph_img = lidar_to_sph.sph_projection(pcd_database)  # get spherical projection
@@ -53,7 +54,7 @@ for pcd_name in tqdm(pcd_files):
     feature_test.append(hog_fea.infer_data(sph_img))  # get HOG feature
 
 # evaluate recall
-# our evaluation function get_recall() can only 
+# our evaluation function get_recall() is based on our data structure stated in Line 42~43
 feature_ref = np.array(feature_ref)
 feature_test = np.array(feature_test)
 topN_recall, one_percent_recall = get_recall(
