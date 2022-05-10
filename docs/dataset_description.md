@@ -1,6 +1,6 @@
 # Dataset Description
 
-## Pittsburgh City-scale Dataset
+## City-scale UGV Localization Dataset
 
 Pittsburgh city-scale dataset consists abundant sensory information including GPS, IMU and LiDAR. We created it by traversing 187.5 km in the city of Pittsburgh, which results in over 70 thousand dense LiDAR submaps.
 
@@ -32,7 +32,7 @@ In this dataset, we include:
 - Ground truth poses of submaps (6DoF)
 
 
-## Pitts Helicopter Dataset
+## Visual Terrain Relative Navigation
 
 This dataset focuses on visual place recognition over a large-scale trajectory. The trajectory of interest is a 150km long flight from Ohio to Pittsburgh using a helicopter with a nadir-facing high resolution camera. The trajectory includes several types of environments of varying difficulty, including urban/suburban, forested, rural, and other natural terrain.
 
