@@ -3,9 +3,9 @@
 Dataset for the General Place Recognition Competition. You can find more details in the competition website: [http://gprcompetition.com/](http://gprcompetition.com/)
 
 ## Note
-- **1st-round Competition: <font color=Red>04/08/2022~05/24/2022</font>**
+- **1st-round Competition: <font color=Red>05/10/2022~05/24/2022</font>**
 
-- **2nd-round Competition: <font color=Red>05/24/2022~09/01/2022</font>**
+- **2nd-round Competition: <font color=Red>05/24/2022~09/10/2022</font>**
 
 - **Large-scale 3D Localization Dataset:**
   * **Training and validation set release: <font color=Red>8th May</font>**
