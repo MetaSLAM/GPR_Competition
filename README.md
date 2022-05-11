@@ -49,10 +49,10 @@ Ground truth positions of the flight were collected using a NovAtel's SPAN GPS+I
     ![uav_navigation](docs/data_pics/Pitts_Helicopter_Dataset.png)
 
     In this dataset, we include:
-    * High resolution (1600x1200) helicopter imagery, captured at 20fps. Timestamps are synchronized with the rest of the system.
+    * High resolution (compressed to 500x500) helicopter imagery, captured at 20fps. Timestamps are synchronized with the rest of the system.
     * Paired reference satellite image for each helicopter frame.
-    * Timestamped IMU (linear and angular velocities).
-    * Timestamped global positions (ECEF coordinates).
+    * IMU (scalar last quaternion, in ECEF reference frame)
+    * Global positions (UTM coordinates).
 
 Relative ground truth for each sequence compared with the corresponding selected reference sequence is provided.
 
