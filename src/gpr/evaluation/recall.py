@@ -16,6 +16,9 @@ def get_recall(
     queries_feature: np.ndarray,
     true_threshold: int = 2,
     num_neighbors: int = 50,
+    reference_poses: np.ndarray = None,
+    queries_poses: np.ndarray = None,
+    success_dis: np.ndarray = None,
 ):
     """Analyze the recall of references and queries.
     Args:
@@ -23,6 +26,9 @@ def get_recall(
         queries_feature [N2, M]: N2 frames query features
         true_threshold [int]: threshold for true place recognition
         num_neighbors [int]: Knn search, determine the N for top-N recall
+        reference_poses [N1, 3]: corresponding reference poses
+        queries_poses [N1, 3]: corresponding query poses
+        success_dis [int]: distance regarded as success retrieval
     Return:
         topN_recall, one_percent_recall
     """
@@ -35,9 +41,15 @@ def get_recall(
 
     num_evaluated = 0
     dists, indices = database_nbrs.query(queries_feature, k=num_neighbors)
+    if reference_poses is not None:
+        database_poses_nbrs = KDTree(reference_poses)
+        dists_poses, indices_poses = database_poses_nbrs.query(queries_poses, k=num_neighbors)
 
     for i in range(true_threshold, len(queries_feature) - true_threshold):
-        true_neighbors = i + np.arange(-true_threshold, true_threshold + 1)
+        if reference_poses is None:
+            true_neighbors = i + np.arange(-true_threshold, true_threshold + 1)
+        else:
+            true_neighbors = indices_poses[i][np.where(dists_poses[i]<success_dis)]
         if len(true_neighbors) == 0:
             continue
         num_evaluated += 1
