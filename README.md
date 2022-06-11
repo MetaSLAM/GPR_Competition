@@ -6,9 +6,15 @@ Dataset for the General Place Recognition Competition. You can find more details
 - **1st-round Competition: <font color=Red>04/08/2022~05/24/2022</font>**
   * :1st_place_medal:1st and :2nd_place_medal:2nd --> Present @ ICRA 2022
 
+<<<<<<< HEAD
 - **2nd-round Competition: <font color=Red>05/24/2022~09/01/2022</font>**
   * :1st_place_medal:1st in each track --> :dollar: 3000$
   * :2nd_place_medal:2nd in each track --> :dollar: 2000$
+=======
+- **2nd-round Competition: <font color=Red>06/01/2022~09/01/2022</font>**
+  * :1st_place_medal:1st --> :dollar: 3000$
+  * :2nd_place_medal:2nd --> :dollar: 2000$
+>>>>>>> bbef1f62b53c84c2bca0d7a0f6430751d93ae5a7
   * Exceptional Individuals 
     * Academic Visits to [RI](https://www.ri.cmu.edu/)
     * Internship at [Air Lab](http://theairlab.org/)
@@ -32,7 +38,8 @@ The performance is evaluated on AIcrowd, please sign up or log in [here](https:/
 
 We provide two datasets for evaluating place recognition or global localization methods. They are
 
-- **Large-scale 3D Localization Dataset**: This dataset aims for the Large-scale 3D Localization (LiDAR$\rightarrow$LiDAR) competition track. It has LiDAR point clouds and ground truth poses for 55 trajectories, collected in Pittsburgh. Each trajectory is divided into several submaps, and a submap has size 50m*50m with the distance between every two submaps being 2m. [Dropbox](https://www.dropbox.com/sh/q1w5dmghbkut553/AAAOCMaELmfHE4NN5cw06QBba?dl=0) or [百度云盘](https://pan.baidu.com/s/1M97bBnSoRhy-56NhAmpf7w)(提取码:qghd).
+- **Large-scale 3D Localization Dataset**: This competition dataset is a subset of the [ALITA](https://github.com/MetaSLAM/ALITA) dataset, which can be accessed [here](https://github.com/MetaSLAM/ALITA).
+This dataset aims for the Large-scale 3D Localization (LiDAR$\rightarrow$LiDAR) competition track. It has LiDAR point clouds and ground truth poses for 55 trajectories, collected in Pittsburgh. Each trajectory is divided into several submaps, and a submap has size 50m*50m with the distance between every two submaps being 2m. [Dropbox](https://www.dropbox.com/sh/q1w5dmghbkut553/AAAOCMaELmfHE4NN5cw06QBba?dl=0) or [百度云盘](https://pan.baidu.com/s/1M97bBnSoRhy-56NhAmpf7w)(提取码:qghd).
     
     ![pitts_large-scale](docs/data_pics/Pittsburgh_City-scale_Dataset.png)
 
@@ -42,17 +49,18 @@ We provide two datasets for evaluating place recognition or global localization 
 
     You can find the **sample** training data `gpr_pitts_sample.tar.gz` and testing/query data `gpr_pitts_query_sample.tar.gz` [here](https://sandbox.zenodo.org/record/1033096).
 
-- **Visual Terrain Relative Navigation Dataset**: This dataset focuses on visual place recognition over a large-scale trajectory. The trajectory of interest is a 150km long flight from Ohio to Pittsburgh using a helicopter with a nadir-facing high resolution camera. The trajectory includes several types of environments of varying difficulty, including urban/suburban, forested, rural, and other natural terrain.
+- **Visual Terrain Relative Navigation Dataset**: This competition dataset is a subset of the [ALTO](https://github.com/MetaSLAM/ALTO) dataset, which can be accessed [here](https://github.com/MetaSLAM/ALTO). 
+This dataset focuses on visual place recognition over a large-scale trajectory. The trajectory of interest is a 150km long flight from Ohio to Pittsburgh using a helicopter with a nadir-facing high resolution camera. The trajectory includes several types of environments of varying difficulty, including urban/suburban, forested, rural, and other natural terrain.
 Part of the difficulty of this challenge involves being able to correctly match the inference imagery to the reference map imagery taken several years prior. We captured this flight in August 2017, and we include georeferenced satellite imagery from 2012.
 Ground truth positions of the flight were collected using a NovAtel's SPAN GPS+INS, with submeter level accuracy. [Dropbox](https://www.dropbox.com/sh/q1w5dmghbkut553/AAAOCMaELmfHE4NN5cw06QBba?dl=0) or [百度云盘](https://pan.baidu.com/s/1M97bBnSoRhy-56NhAmpf7w)(提取码:qghd).
     
     ![uav_navigation](docs/data_pics/Pitts_Helicopter_Dataset.png)
 
     In this dataset, we include:
-    * High resolution (1600x1200) helicopter imagery, captured at 20fps. Timestamps are synchronized with the rest of the system.
+    * High resolution (compressed to 500x500) helicopter imagery, captured at 20fps. Timestamps are synchronized with the rest of the system.
     * Paired reference satellite image for each helicopter frame.
-    * Timestamped IMU (linear and angular velocities).
-    * Timestamped global positions (ECEF coordinates).
+    * IMU (scalar last quaternion, in ECEF reference frame)
+    * Global positions (UTM coordinates).
 
 Relative ground truth for each sequence compared with the corresponding selected reference sequence is provided.
 
