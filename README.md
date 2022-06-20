@@ -48,7 +48,11 @@ This dataset aims for the Large-scale 3D Localization (LiDAR$\rightarrow$LiDAR) 
 - **Visual Terrain Relative Navigation Dataset**: This competition dataset is a subset of the [ALTO](https://github.com/MetaSLAM/ALTO) dataset, which can be accessed [here](https://github.com/MetaSLAM/ALTO). 
 This dataset focuses on visual place recognition over a large-scale trajectory. The trajectory of interest is a 150km long flight from Ohio to Pittsburgh using a helicopter with a nadir-facing high resolution camera. The trajectory includes several types of environments of varying difficulty, including urban/suburban, forested, rural, and other natural terrain.
 Part of the difficulty of this challenge involves being able to correctly match the inference imagery to the reference map imagery taken several years prior. We captured this flight in August 2017, and we include georeferenced satellite imagery from 2012.
-Ground truth positions of the flight were collected using a NovAtel's SPAN GPS+INS, with submeter level accuracy. [Dropbox](https://www.dropbox.com/sh/q1w5dmghbkut553/AAAOCMaELmfHE4NN5cw06QBba?dl=0) or [百度云盘](https://pan.baidu.com/s/1M97bBnSoRhy-56NhAmpf7w)(提取码:qghd).
+Ground truth positions of the flight were collected using a NovAtel's SPAN GPS+INS, with submeter level accuracy. 
+
+* The ROUND 1 dataset is available here: [Dropbox](https://www.dropbox.com/sh/q1w5dmghbkut553/AAAOCMaELmfHE4NN5cw06QBba?dl=0) or [百度云盘](https://pan.baidu.com/s/1M97bBnSoRhy-56NhAmpf7w)(提取码:qghd).
+
+* The ROUND 2 dataset is available here: [Dropbox](https://www.dropbox.com/scl/fo/saejbf9qanbfq40k8jo18/h?dl=0&rlkey=l19kx1vzzahifv3n5lkg19n84) or
     
     ![uav_navigation](docs/data_pics/Pitts_Helicopter_Dataset.png)
 
